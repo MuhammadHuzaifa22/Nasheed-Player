@@ -28,14 +28,66 @@
 <h1>The Way Of The Tears</h1>
 <p>Muhammad Al Muqit</p>
 
-<audio controls>
+<audio  id="nasheed">
     <source src="./Assets/Audio/The Way of The Tears - Exclusive Nasheed - Muhammad al Muqit.mp3" type="audio/mp3">
 </audio>
 <input type="range" value="0" id="progress">
 
+
+<div class="controls">
+    <div><i class="fa-solid fa-backward"></i></div>
+    <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
+    <div><i class="fa-solid fa-forward"></i></div>
+</div>
     </div>
 </div>
 
+
+
+
+<script>
+
+let progress = document.getElementById('progress');
+let Nasheed = document.getElementById('nasheed')
+let ctrlIcon = document.getElementById('ctrlIcon')
+
+
+Nasheed.onloadedmetadata = function(){
+    progress.max = Nasheed.duration;
+    progress.value = Nasheed.currentTime;
+    console.log(Nasheed.duration.toFixed(2))
+}
+
+
+
+function playPause(){
+    if(ctrlIcon.classList.contains("fa-pause")){
+        Nasheed.pause();
+        ctrlIcon.classList.remove("fa-pause");
+        ctrlIcon.classList.add("fa-play");
+    }else{
+    Nasheed.play();
+    ctrlIcon.classList.add("fa-pause");
+    ctrlIcon.classList.remove("fa-play");
+}
+
+}
+
+if(Nasheed.play()){
+    setInterval(()=>{
+        progress.value = Nasheed.currentTime
+    },500)
+}
+
+progress.onchange = function(){
+    Nasheed.play();
+    Nasheed.currentTime = progress.value;
+    ctrlIcon.classList.add("fa-pause");
+    ctrlIcon.classList.remove("fa-play");
+}
+
+
+</script>
 
 </body>
 </html>
